@@ -15,15 +15,18 @@ import {
   ListItemText,
   Collapse,
   Popover,
-  MenuItem as MenuItemMui
+  MenuItem as MenuItemMui,
+  Divider,
+  
 } from "@mui/material";
 import { Outlet, useLocation, useNavigate,Link as RouterLink  } from "react-router-dom";
 import { drawerMenu, popMenu } from "../../constants/menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"; 
-
-
+import {useSelector, useDispatch} from "react-redux";
+import { appSelector, appActions } from "../../redux/appRedux";
+import { Stack } from "@mui/system";
 const drawerWidth = 280;
 const MenuItem = ({ item }) => {
   const navigate = useNavigate();
@@ -203,6 +206,8 @@ const PopMenu = () => {
 };
 
 const DashboardLayout = () => {
+  const dispatch = useDispatch();
+  const pageTitle = useSelector(appSelector.pageTitle)
   const [open, setOpen] = useState(false);
 
   return (
@@ -216,7 +221,7 @@ const DashboardLayout = () => {
           <Box px={2} sx={{ cursor: "pointer" }}>
             <MenuIcon sx={{ color: "white" }} onClick={() => setOpen(true)} />
           </Box>
-
+          <Stack direction="row" spacing={2}>
           <Typography
             component="h1"
             variant="h6"
@@ -225,7 +230,21 @@ const DashboardLayout = () => {
             sx={{ flexGrow: 1 }}
           >
             Pilar Tecno Web
+          </Typography>          
+          <Divider orientation="vertical" variant="middle" flexItem sx={{color:'white'}}/>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            sx={{ flexGrow: 1 }}
+          >
+            {pageTitle}
           </Typography>
+
+          </Stack>
+
+        
           
           <PopMenu/>
 
